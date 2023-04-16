@@ -231,6 +231,43 @@ local function tls_settings(data, direction)
     return result
 end
 
+local function reality_settings(data, direction)
+    local result = {}
+
+    result.show = data.reality_show == "true" and true or false
+
+    if direction == "outbound" then
+        result.serverName = data.reality_servername
+        result.fingerprint = data.reality_fingerprint
+        result.shortId = data.reality_shortid
+        result.publicKey = data.reality_publickey
+        result.spiderX = data.reality_spiderx or ""
+    end
+
+    if direction == "inbound" then
+        local servernames = {}
+        local shortids = {}
+
+        for _, x in ipairs(data.reality_servername ~= nil and data.reality_servername or {}) do
+            table.insert(servernames, x)
+        end
+        for _, x in ipairs(data.reality_shortid ~= nil and data.reality_shortid or {}) do
+            table.insert(shortids, x)
+        end
+
+        result.dest = data.reality_dest
+        result.xver = data.reality_xver ~= nil and tonumber(data.reality_xver) or nil
+        result.serverNames = next(servernames) ~= nil and servernames or nil
+        result.privateKey = data.reality_privatekey
+        result.minClientVer = data.reality_minclientver
+        result.maxClientVer = data.reality_maxclientver
+        result.maxTimeDiff = data.reality_maxtimediff ~= nil and tonumber(data.reality_maxtimediff) or nil
+        result.shortIds = next(shortids) ~= nil and shortids or nil
+    end
+
+    return result
+end
+
 local function sockopt_settings(data, direction)
     local tproxy = nil
     local acceptproxyprotocal = nil
@@ -270,6 +307,7 @@ local function stream_settings(data, direction)
         security = data.stream_security,
         tlsSettings = data.stream_security == "tls" and tls_settings(data, direction) or nil,
         xtlsSettings = data.stream_security == "xtls" and tls_settings(data, direction) or nil,
+        realitySettings = data.stream_security == "reality" and reality_settings(data, direction) or nil,
         tcpSettings = tcp_settings(data, direction),
         kcpSettings = kcp_settings(data, direction),
         wsSettings = ws_settings(data, direction),

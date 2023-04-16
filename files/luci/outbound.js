@@ -93,6 +93,7 @@ return view.extend({
         o.value("none", "None");
         o.value("tls", "TLS");
         o.value("xtls", "XTLS");
+        o.value("reality", "REALITY");
         o.rmempty = false;
 
         // protocol tab - configurations for each protocol
@@ -213,6 +214,7 @@ return view.extend({
         o = ss.taboption('protocol', form.ListValue, "vless_flow", _('Vless Flow'));
         o.depends({"protocol": "vless", "stream_security": "tls"});
         o.depends({"protocol": "vless", "stream_security": "xtls"});
+        o.depends({"protocol": "vless", "stream_security": "reality"});
         o.value("none", "none");
         o.value("xtls-rprx-vision", "xtls-rprx-vision");
         o.value("xtls-rprx-vision-udp443", "xtls-rprx-vision-udp443")
@@ -331,6 +333,58 @@ return view.extend({
         o = ss.taboption('protocol', form.DynamicList, 'tls_pinnedpeercertificatechainsha256', _('Remote Cert Chain SHA256'));
         o.depends('stream_security', "tls");
         o.depends('stream_security', "xtls");
+        o.rmempty = true;
+        o.modalonly = true;
+
+        // transport tab - reality settings
+
+        o = ss.taboption('protocol', form.DummyValue, '_realityconfig');
+        o.depends('stream_security', "reality");
+        o.rawhtml = true;
+        o.modalonly = true;
+        o.cfgvalue = function(section_id) {
+            return _('<strong>Configuration Options for REALITY</strong>');
+        };
+
+        o = ss.taboption('protocol', form.Flag, 'reality_show', _('Show Debug Info'));
+        o.depends('stream_security', "reality");
+        o.enabled = 'true';
+        o.disabled = 'false';
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_servername', _('Server Name'));
+        o.depends('stream_security', "reality");
+        o.datatype= 'hostname';
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.ListValue, 'reality_fingerprint', _('Fingerprint'));
+        o.depends('stream_security', "reality");
+        o.value("", "(not set)");
+        o.value("chrome", "Chrome");
+        o.value("firefox", "Firefox");
+        o.value("safari", "Safari");
+        o.value("ios", "iOS");
+        o.value("android", "Android");
+        o.value("edge", "Edge");
+        o.value("random", "Random");
+        o.value("randomized", "Randomize");
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_shortid', _('Short ID'));
+        o.depends('stream_security', "reality");
+        o.validate = xjay.validateShortID;
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_publickey', _('Public Key'));
+        o.depends('stream_security', "reality");
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_spiderx', _('Spider Path'));
+        o.depends('stream_security', "reality");
         o.rmempty = true;
         o.modalonly = true;
 

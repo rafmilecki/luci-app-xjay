@@ -235,26 +235,6 @@ inbound_protocol{}
 			|- tcp_type: string: none | http
 			|- tcp_path: string
 			|- tcp_host: domain
-	|- tls_settings{}
-		|- tls_servername: string - outbound only
-		|- tls_rejectnuknownsni: bool - inbound only
-		|- tls_allowinsecure: bool - outbound only
-		|- tls_alpn[]: sting array: h2 | http/1.1
-		|- tls_minversion: string - inbound only
-		|- tls_maxversion: string - inbound only
-		|- tls_ciphersuites: string: cipher1:cipher2:... - inbound only
-		|- tls_certificates[] - inbound only
-			|- cert_ocspStapling: number: default 3600
-			|- cert_onetimeloading: bool
-			|- cert_usage: string
-			|- cert_certificatefile: string: file path
-			|- cert_certificatekeyfile: string: file path
-			|- cert_certficate: string array
-			|- cert_key: string array
-		|- tls_disablesystemroot: bool - outbound only
-		|- tls_enablesessionresumption: bool - outbound only
-		|- tls_fingerprint: string: chrome | firefox | safari | ios | android | edge | random | randomized - outbound only
-		|- tls_pinnedpeercertificatechainsha256[]: string - outbound only
 	|- kcp_settings{}
 		|- kcp_mtu: number: 576 <= mtu <= 1460
 		|- kcp_tti: number: 10 <= tti <= 100
@@ -303,6 +283,41 @@ inbound_protocol{}
 		|- sockopt_tcpkeepaliveinterval: number - inbound only
 		|- sockopt_tcpcongestion: string: bbr | cubic | reno - inbound only
 		|- sockopt_interface: string - outbound only
+	|- tls_settings{}
+		|- tls_servername: string - outbound only
+		|- tls_rejectnuknownsni: bool - inbound only
+		|- tls_allowinsecure: bool - outbound only
+		|- tls_alpn[]: sting array: h2 | http/1.1
+		|- tls_minversion: string - inbound only
+		|- tls_maxversion: string - inbound only
+		|- tls_ciphersuites: string: cipher1:cipher2:... - inbound only
+		|- tls_certificates[] - inbound only
+			|- cert_ocspStapling: number: default 3600
+			|- cert_onetimeloading: bool
+			|- cert_usage: string
+			|- cert_certificatefile: string: file path
+			|- cert_certificatekeyfile: string: file path
+			|- cert_certficate: string array
+			|- cert_key: string array
+		|- tls_disablesystemroot: bool - outbound only
+		|- tls_enablesessionresumption: bool - outbound only
+		|- tls_fingerprint: string: chrome | firefox | safari | ios | android | edge | random | randomized - outbound only
+		|- tls_pinnedpeercertificatechainsha256[]: string - outbound only
+	|- reality_settings{}
+		|- reality_show: bool
+		|- reality_dest: string - inbound only
+		|- reality_xver: number: 0 | 1 | 2 : default 0 - inbound only
+		|- reality_servername[]: string array - inbound only
+		|- reality_privatekey: string - inbound only
+		|- reality_minclientver: string
+		|- reality_maxclientver: string
+		|- reality_maxtimediff: number: ms
+		|- reality_shortid[]: string array
+		|- reality_servername: string - outbound only
+		|- reality_fingerprint: string: chrome | firefox | safari | ios | android | edge | random | randomized - outbound only
+		|- reality_shortid: string
+		|- reality_publickey: string
+		|- reality_spiderx: string
 
 - fallback{}: require inbound to be tcp+tls
 	|- name: string: default ""
