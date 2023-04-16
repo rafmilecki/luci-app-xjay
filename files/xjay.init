@@ -60,7 +60,7 @@ start_service() {
 
     # if not enabled exit without doing anthing
     local enabled=""
-    local xray_bin=""
+    local xray_path=""
     config_get enabled $GENERAL_FIRST_SECTION enabled
     [ "$enabled" != "true" ] && logger -st xjay[$$] -p4 "Diabled, exiting..." && return
 
@@ -107,10 +107,10 @@ start_service() {
 
     # check xray bin and start it
     mkdir -p /var/run /var/etc
-    config_get xray_bin $GENERAL_FIRST_SECTION xray_bin
-    command -v ${xray_bin} > /dev/null 2>&1 || return 1
+    config_get xray_path $GENERAL_FIRST_SECTION xray_path
+    command -v ${xray_path} > /dev/null 2>&1 || return 1
     gen_config_file
-    start_xjay ${xray_bin}
+    start_xjay ${xray_path}
 
     # set up firewall rules for routing
     /usr/share/xjay/firewall/firewall_xjay.sh "$DEFAULT_INBOUND_CFG"
