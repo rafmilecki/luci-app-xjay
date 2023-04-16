@@ -1,0 +1,14 @@
+{
+    "luci-app-xjay": {
+        "description": "Grant access to xjay configurations",
+        "read": {
+            "uci": [ "xjay" ],
+            "file": {
+                "/var/etc/xjay/config.json": [ "read" ]
+            }
+        },
+        "write": {
+            "uci": [ "xjay" ]
+        }
+    }
+}
