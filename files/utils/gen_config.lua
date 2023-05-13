@@ -103,23 +103,21 @@ local function ws_settings(data, direction)
 end
 
 local function http_settings(data, direction)
-    if data.stream_network == "http" then
+    if data.stream_network == "h2" then
         local readidletimeout = nil
         local healthchecktimeout = nil
+        local http_settings = {}
 
+        http_settings.host = data.http_host
+        http_settings.path = data.http_path
         if direction == "outbound" then
-            readidletimeout = data.http_readidletimeout ~= nil and tonumber(data.http_readidletimeout) or nil
-            healthchecktimeout = data.http_healthchecktimeout ~= nil and tonumber(data.http_healthchecktimeout) or nil
+            http_settings.read_idle_timeout = data.http_readidletimeout ~= nil and tonumber(data.http_readidletimeout) or nil
+            http_settings.health_check_timeout = data.http_healthchecktimeout ~= nil and tonumber(data.http_healthchecktimeout) or nil
         end
+        http_settings.method = data.http_method
+        -- headers not implemented yet
 
-        return {
-            host = data.h2_host,
-            path = data.http_path,
-            read_idle_timeout = readidletimeout,
-            health_check_timeout = healthchecktimeout,
-            method = data.http_method
-            -- headers not implemented yet
-        }
+        return next(http_settings) ~= nil and http_settings or nil
     else
         return nil
     end
@@ -496,7 +494,7 @@ local function vless_inbound(data)
             if u.name == v then
                 local user = {
                     id = u.password,
-                    flow = data.vless_flow ~= "none" and data.vless_flow or nil,
+                    flow = data.vless_flow ~= "none" and data.vless_flow or "",
                     email = u.email,
                     level = u.level ~= nil and tonumber(u.level) or nil
                 }
@@ -675,7 +673,7 @@ local function vless_outbound(data)
                 users = {
                     {
                         id = data.vless_id,
-                        flow = data.vless_flow ~= "none" and data.vless_flow or nil,
+                        flow = data.vless_flow ~= "none" and data.vless_flow or "",
                         encryption = data.vless_encryption, -- encryption algorithim, for vless, currently only none
                         level = data.vless_level ~= nil and tonumber(data.vless_level) or nil
                     }

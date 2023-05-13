@@ -572,7 +572,7 @@ return view.extend({
         o.value("tcp", "TCP");
         o.value("kcp", "mKCP");
         o.value("ws", "WebSocket");
-        o.value("http", "HTTP/2");
+        o.value("h2", "HTTP/2");
         o.value("quic", "QUIC");
         o.value("ds", "Domain Socket");
         o.value("grpc", "gRPC");
@@ -692,25 +692,26 @@ return view.extend({
         o.rmempty = false;
         o.modalonly = true;
 
-        // transport tab - http settings
+        // transport tab - http/2 settings
 
         o = ss.taboption('transport', form.DynamicList, "http_host", _("HTTP Host"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.datatype= 'hostname';
-        o.rmempty = false;
+        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_path", _("HTTP Path"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.validate = xjay.validateDirectory;
-        o.rmempty = false;
+        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "http_method", _("HTTP Method"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.value("PUT", "PUT");
         o.value("GET", "GET");
         o.value("POST", "POST");
+        o.optional = true;
         o.rmempty = true;
         o.modalonly = true;
 
