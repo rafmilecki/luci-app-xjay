@@ -92,7 +92,7 @@ return view.extend({
         o = ss.taboption('protocol', form.ListValue, 'stream_security', _('Stream Security'));
         o.value("none", "None");
         o.value("tls", "TLS");
-        o.value("xtls", "XTLS");
+        o.value("xtls", "XTLS (deprecated)");
         o.value("reality", "REALITY");
         o.rmempty = false;
 
