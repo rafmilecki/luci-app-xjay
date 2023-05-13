@@ -13,8 +13,8 @@ Another luci app for xray-core. The app requires the certain level of knowlege o
 * Outbound: blackhole, dns, freedom, http, shadowsocks, socks, trojan, vless, vmess
 
 ## Supported Transport Configurations
-* Network Types: tcp, kcp, websocket, http(h2), quic, domainsocket, grpc
-* Security: TLS, XTLS
+* Network Types: tcp, kcp, websocket, http/2, quic, domainsocket, grpc
+* Security: TLS, XTLS, Reality
 * Socket Options
 
 ## Guide for Compilation on OpenWrt
@@ -45,8 +45,8 @@ Another luci app for xray-core. The app requires the certain level of knowlege o
 * [x] multiple outbounds for routing rules
 * [x] multiple users for inbound services
 * [x] multiple fallbacks for inbound services
+* [x] reality support
 * [ ] geosite asset viewer and picker
-* [ ] reality support
 * [ ] policy configurations
 * [ ] stats configurations
 * [ ] reverse proxy configurations
