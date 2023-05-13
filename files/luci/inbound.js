@@ -398,7 +398,7 @@ return view.extend({
         o.rmempty = false;
         o.modalonly = true;
 
-        // transport tab - reality settings
+        // protocol tab - reality settings
 
         o = ss.taboption('protocol', form.DummyValue, '_realityconfig');
         o.depends('stream_security', "reality");

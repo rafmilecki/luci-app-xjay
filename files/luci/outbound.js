@@ -268,7 +268,7 @@ return view.extend({
         o.rmempty = true;
         o.modalonly = true;
 
-        // transport tab - tls or xtls settings
+        // protocol tab - tls or xtls settings
 
         o = ss.taboption('protocol', form.DummyValue, '_tlsconfig');
         o.depends('stream_security', "tls");
@@ -336,7 +336,7 @@ return view.extend({
         o.rmempty = true;
         o.modalonly = true;
 
-        // transport tab - reality settings
+        // protocol tab - reality settings
 
         o = ss.taboption('protocol', form.DummyValue, '_realityconfig');
         o.depends('stream_security', "reality");
