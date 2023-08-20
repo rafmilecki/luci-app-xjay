@@ -22,6 +22,8 @@ config_cb(){
                 INBOUND_FIRST_SECTION="$name"
         elif [ "$type" == "outbound" ] && [ "$OUTBOUND_FIRST_SECTION" == "" ]; then
                 OUTBOUND_FIRST_SECTION="$name"
+        elif [ "$type" == "misc" ] && [ "$MISC_FIRST_SECTION" == "" ]; then
+                MISC_FIRST_SECTION="$name"
         fi
 }
 
@@ -58,7 +60,7 @@ gen_config_file() {
 start_service() {
     config_load $NAME
 
-    # if not enabled exit without doing anthing
+    # if not enabled exit without doing anything
     local enabled=""
     local xray_path=""
     config_get enabled $GENERAL_FIRST_SECTION enabled
@@ -107,7 +109,7 @@ start_service() {
 
     # check xray bin and start it
     mkdir -p /var/run /var/etc
-    config_get xray_path $GENERAL_FIRST_SECTION xray_path
+    config_get xray_path $MISC_FIRST_SECTION xray_path
     command -v ${xray_path} > /dev/null 2>&1 || return 1
     gen_config_file
     start_xjay ${xray_path}

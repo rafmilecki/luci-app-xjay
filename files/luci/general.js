@@ -17,9 +17,6 @@ return view.extend({
         o.enabled = 'true';
         o.disabled = 'false';
 
-        o = s.option(form.Value, 'xray_path', _('Xray Executable Path'), 'Please check if it is right file location for xray bin, or this will not work!');
-        o.datatype = 'directory';
-
         return m.render();
     }
 

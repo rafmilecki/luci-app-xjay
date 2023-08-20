@@ -35,6 +35,12 @@ return view.extend({
         o.enabled = 'true';
         o.disabled = 'false';
 
+        // as blow are some log options
+        s.tab('path', _('Path'));
+
+        o = s.taboption('path', form.Value, 'xray_path', _('Xray Executable Path'), 'Please check if it is right file location for xray bin, or this will not work!');
+        o.datatype = 'directory';
+
         // as blow is the debug options
         s.tab('debug', _('Debug'));
 
