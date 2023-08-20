@@ -299,6 +299,19 @@ local function sockopt_settings(data, direction)
     }
 end
 
+local function mux_settings(data, direction)
+    if data.mux_enabled == "true" and direction == 'outbound' then
+        return {
+            enabled = data.mux_enabled == "true" and true or false,
+            concurrency = data.mux_concurrency ~= nil and tonumber(data.mux_concurrency) or nil,
+            xudpConcurrency = data.mux_xudpconcurrency ~= nil and tonumber(data.mux_xudpconcurrency) or nil,
+            xudpProxyUDP443 = data.mux_xudpproxyudp443
+        }
+    else
+        return nil
+    end
+end
+
 local function stream_settings(data, direction)
     return {
         network = data.stream_network,
@@ -724,7 +737,8 @@ local function outbound_server(data)
         sendThrough = data.sendthrough,
         protocol = data.protocol,
         settings = outbound_settings,
-        streamSettings = stream_settings(data, "outbound")
+        streamSettings = stream_settings(data, "outbound"),
+        mux = mux_settings(data, 'outbound')
     }
 end
 

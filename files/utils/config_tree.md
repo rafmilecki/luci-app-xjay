@@ -318,6 +318,11 @@ inbound_protocol{}
 		|- reality_shortid: string
 		|- reality_publickey: string
 		|- reality_spiderx: string
+	|- mux_settings{} - inbound only
+		|- mux_enabled: bool
+		|- mux_concurrency: number: 1 <= concurrency <= 1024, -1
+		|- mux_xudpconcurrency: number: 1 <= concurrency <= 1024, -1
+		|- mux_xudpproxyudp443: string: reject | allow | skip
 
 - fallback{}: require inbound to be tcp+tls
 	|- name: string: default ""

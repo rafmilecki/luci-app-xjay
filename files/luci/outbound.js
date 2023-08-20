@@ -656,6 +656,35 @@ return view.extend({
         o.rmempty = true;
         o.modalonly = true;
 
+        // transport tab - mux settings
+
+        o = ss.taboption('transport', form.Flag, "mux_enabled", _("Enable Mux"));
+        o.enabled = 'true';
+        o.disabled = 'false';
+        o.modalonly = true;
+
+        o = ss.taboption('transport', form.Value, "mux_concurrency", _("Maximum concurrent TCP connections"), _("The number means maximum child connections in a TCP connection. Range from 1 to 1024. If set -1, then it will not use mux to do TCP connection."));
+        o.depends("mux_enabled", "true");
+        o.datatype = 'integer';
+        o.placeholder = '16';
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('transport', form.Value, "mux_xudpconcurrency", _("Maximum concurrent UDP connections"), _("Use XUDP tunel to proxy UDP traffic. The number means maximum UDP over TCP concurrent connections. Range from 1 to 1024. If set 0, keep it blank set as 0, will use the same TCP connection. If set -1, then it will not use mux to do UDP connection."));
+        o.depends("mux_enabled", "true");
+        o.datatype = 'integer';
+        o.placeholder = '16';
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('transport', form.ListValue, "mux_xudpproxyudp443", _("QUIC UDP proxy mode"), _("Control the behavior of handling QUIC(UDP/443) traffic."));
+        o.depends("mux_enabled", "true");
+        o.value("reject", "reject - fallback to TCP HTTP/2");
+        o.value("allow", "allow - go through mux connection");
+        o.value("skip", "skip - not use mux for quic");
+        o.optional = true;
+        o.modalonly = true;
+
         return m.render();
     }
 
