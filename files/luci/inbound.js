@@ -100,7 +100,8 @@ return view.extend({
         o = ss.taboption('protocol', form.ListValue, 'stream_security', _('Stream Security'));
         o.value("none", "None");
         o.value("tls", "TLS");
-        o.value("xtls", "XTLS");
+        o.value("xtls", "XTLS (deprecated)");
+        o.value("reality", "REALITY");
         o.rmempty = false;
 
         // protocol tab - configurations for each protocol
@@ -272,6 +273,7 @@ return view.extend({
         o = ss.taboption('protocol', form.ListValue, "vless_flow", _('Vless Flow'));
         o.depends({"protocol": "vless", "stream_security": "tls"});
         o.depends({"protocol": "vless", "stream_security": "xtls"});
+        o.depends({"protocol": "vless", "stream_security": "reality"});
         o.value("none", "none");
         o.value("xtls-rprx-vision", "xtls-rprx-vision");
         o.value("xtls-rprx-vision-udp443", "xtls-rprx-vision-udp443")
@@ -396,6 +398,66 @@ return view.extend({
         o.rmempty = false;
         o.modalonly = true;
 
+        // protocol tab - reality settings
+
+        o = ss.taboption('protocol', form.DummyValue, '_realityconfig');
+        o.depends('stream_security', "reality");
+        o.rawhtml = true;
+        o.modalonly = true;
+        o.cfgvalue = function(section_id) {
+            return _('<strong>Configuration Options for REALITY</strong>');
+        };
+
+        o = ss.taboption('protocol', form.Flag, 'reality_show', _('Show Debug Info'));
+        o.depends('stream_security', "reality");
+        o.enabled = 'true';
+        o.disabled = 'false';
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_dest', _('Destination Address'));
+        o.depends('stream_security', "reality");
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_xver', _('Proxy Version'));
+        o.depends('stream_security', "reality");
+        o.datatype= 'uinteger';
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.DynamicList, "reality_servername", _("Server Name List"), _('Available server name list for clients.'));
+        o.depends('stream_security', "reality");
+        o.datatype = 'hostname';
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_privatekey', _('Private Key'));
+        o.depends('stream_security', "reality");
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_minclientver', _('Minimum Client Version'));
+        o.depends('stream_security', "reality");
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_maxclientver', _('Maximum Client Version'));
+        o.depends('stream_security', "reality");
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_maxtimediff', _('Maximum Time Difference'), _('Allowed maxmium time different between client and server in mini sections.'));
+        o.depends('stream_security', "reality");
+        o.datatype= 'uinteger';
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.DynamicList, "reality_shortid", _("Short ID List"), _('Available short ID list for clients.'));
+        o.depends('stream_security', "reality");
+        o.validate = xjay.validateShortID;
+        o.rmempty = false;
+        o.modalonly = true;
+
         // protocol tab - sniffing settings
 
         o = ss.taboption('protocol', form.DummyValue, '_sniffingconfig');
@@ -510,7 +572,7 @@ return view.extend({
         o.value("tcp", "TCP");
         o.value("kcp", "mKCP");
         o.value("ws", "WebSocket");
-        o.value("http", "HTTP/2");
+        o.value("h2", "HTTP/2");
         o.value("quic", "QUIC");
         o.value("ds", "Domain Socket");
         o.value("grpc", "gRPC");
@@ -630,25 +692,26 @@ return view.extend({
         o.rmempty = false;
         o.modalonly = true;
 
-        // transport tab - http settings
+        // transport tab - http/2 settings
 
         o = ss.taboption('transport', form.DynamicList, "http_host", _("HTTP Host"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.datatype= 'hostname';
-        o.rmempty = false;
+        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_path", _("HTTP Path"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.validate = xjay.validateDirectory;
-        o.rmempty = false;
+        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "http_method", _("HTTP Method"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.value("PUT", "PUT");
         o.value("GET", "GET");
         o.value("POST", "POST");
+        o.optional = true;
         o.rmempty = true;
         o.modalonly = true;
 

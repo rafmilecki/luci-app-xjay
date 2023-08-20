@@ -160,5 +160,17 @@ return baseclass.extend({
 		else {
 			return _('Expecting: %s').format(_('valid routing IP address'));
 		}
+	},
+
+	validateShortID: function(sec, s) {
+		if (s == null || s == '')
+			return true;
+
+		if (/^[0-9a-fA-F]+$/.test(s) && s.length % 2 === 0) { // the string shall be hexdecimal and the string length shall be even
+			return true;
+		}
+		else {
+			return _('Expecting: %s').format(_('hexidecimal string and length shall be even'));
+		}
 	}
 });

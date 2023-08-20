@@ -103,23 +103,21 @@ local function ws_settings(data, direction)
 end
 
 local function http_settings(data, direction)
-    if data.stream_network == "http" then
+    if data.stream_network == "h2" then
         local readidletimeout = nil
         local healthchecktimeout = nil
+        local http_settings = {}
 
+        http_settings.host = data.http_host
+        http_settings.path = data.http_path
         if direction == "outbound" then
-            readidletimeout = data.http_readidletimeout ~= nil and tonumber(data.http_readidletimeout) or nil
-            healthchecktimeout = data.http_healthchecktimeout ~= nil and tonumber(data.http_healthchecktimeout) or nil
+            http_settings.read_idle_timeout = data.http_readidletimeout ~= nil and tonumber(data.http_readidletimeout) or nil
+            http_settings.health_check_timeout = data.http_healthchecktimeout ~= nil and tonumber(data.http_healthchecktimeout) or nil
         end
+        http_settings.method = data.http_method
+        -- headers not implemented yet
 
-        return {
-            host = data.h2_host,
-            path = data.http_path,
-            read_idle_timeout = readidletimeout,
-            health_check_timeout = healthchecktimeout,
-            method = data.http_method
-            -- headers not implemented yet
-        }
+        return next(http_settings) ~= nil and http_settings or nil
     else
         return nil
     end
@@ -231,6 +229,43 @@ local function tls_settings(data, direction)
     return result
 end
 
+local function reality_settings(data, direction)
+    local result = {}
+
+    result.show = data.reality_show == "true" and true or false
+
+    if direction == "outbound" then
+        result.serverName = data.reality_servername
+        result.fingerprint = data.reality_fingerprint
+        result.shortId = data.reality_shortid
+        result.publicKey = data.reality_publickey
+        result.spiderX = data.reality_spiderx or ""
+    end
+
+    if direction == "inbound" then
+        local servernames = {}
+        local shortids = {}
+
+        for _, x in ipairs(data.reality_servername ~= nil and data.reality_servername or {}) do
+            table.insert(servernames, x)
+        end
+        for _, x in ipairs(data.reality_shortid ~= nil and data.reality_shortid or {}) do
+            table.insert(shortids, x)
+        end
+
+        result.dest = data.reality_dest
+        result.xver = data.reality_xver ~= nil and tonumber(data.reality_xver) or nil
+        result.serverNames = next(servernames) ~= nil and servernames or nil
+        result.privateKey = data.reality_privatekey
+        result.minClientVer = data.reality_minclientver
+        result.maxClientVer = data.reality_maxclientver
+        result.maxTimeDiff = data.reality_maxtimediff ~= nil and tonumber(data.reality_maxtimediff) or nil
+        result.shortIds = next(shortids) ~= nil and shortids or nil
+    end
+
+    return result
+end
+
 local function sockopt_settings(data, direction)
     local tproxy = nil
     local acceptproxyprotocal = nil
@@ -270,6 +305,7 @@ local function stream_settings(data, direction)
         security = data.stream_security,
         tlsSettings = data.stream_security == "tls" and tls_settings(data, direction) or nil,
         xtlsSettings = data.stream_security == "xtls" and tls_settings(data, direction) or nil,
+        realitySettings = data.stream_security == "reality" and reality_settings(data, direction) or nil,
         tcpSettings = tcp_settings(data, direction),
         kcpSettings = kcp_settings(data, direction),
         wsSettings = ws_settings(data, direction),
@@ -458,7 +494,7 @@ local function vless_inbound(data)
             if u.name == v then
                 local user = {
                     id = u.password,
-                    flow = data.vless_flow ~= "none" and data.vless_flow or nil,
+                    flow = data.vless_flow ~= "none" and data.vless_flow or "",
                     email = u.email,
                     level = u.level ~= nil and tonumber(u.level) or nil
                 }
@@ -637,7 +673,7 @@ local function vless_outbound(data)
                 users = {
                     {
                         id = data.vless_id,
-                        flow = data.vless_flow ~= "none" and data.vless_flow or nil,
+                        flow = data.vless_flow ~= "none" and data.vless_flow or "",
                         encryption = data.vless_encryption, -- encryption algorithim, for vless, currently only none
                         level = data.vless_level ~= nil and tonumber(data.vless_level) or nil
                     }

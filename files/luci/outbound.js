@@ -92,7 +92,8 @@ return view.extend({
         o = ss.taboption('protocol', form.ListValue, 'stream_security', _('Stream Security'));
         o.value("none", "None");
         o.value("tls", "TLS");
-        o.value("xtls", "XTLS");
+        o.value("xtls", "XTLS (deprecated)");
+        o.value("reality", "REALITY");
         o.rmempty = false;
 
         // protocol tab - configurations for each protocol
@@ -213,6 +214,7 @@ return view.extend({
         o = ss.taboption('protocol', form.ListValue, "vless_flow", _('Vless Flow'));
         o.depends({"protocol": "vless", "stream_security": "tls"});
         o.depends({"protocol": "vless", "stream_security": "xtls"});
+        o.depends({"protocol": "vless", "stream_security": "reality"});
         o.value("none", "none");
         o.value("xtls-rprx-vision", "xtls-rprx-vision");
         o.value("xtls-rprx-vision-udp443", "xtls-rprx-vision-udp443")
@@ -266,7 +268,7 @@ return view.extend({
         o.rmempty = true;
         o.modalonly = true;
 
-        // transport tab - tls or xtls settings
+        // protocol tab - tls or xtls settings
 
         o = ss.taboption('protocol', form.DummyValue, '_tlsconfig');
         o.depends('stream_security', "tls");
@@ -334,6 +336,58 @@ return view.extend({
         o.rmempty = true;
         o.modalonly = true;
 
+        // protocol tab - reality settings
+
+        o = ss.taboption('protocol', form.DummyValue, '_realityconfig');
+        o.depends('stream_security', "reality");
+        o.rawhtml = true;
+        o.modalonly = true;
+        o.cfgvalue = function(section_id) {
+            return _('<strong>Configuration Options for REALITY</strong>');
+        };
+
+        o = ss.taboption('protocol', form.Flag, 'reality_show', _('Show Debug Info'));
+        o.depends('stream_security', "reality");
+        o.enabled = 'true';
+        o.disabled = 'false';
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_servername', _('Server Name'));
+        o.depends('stream_security', "reality");
+        o.datatype= 'hostname';
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.ListValue, 'reality_fingerprint', _('Fingerprint'));
+        o.depends('stream_security', "reality");
+        o.value("", "(not set)");
+        o.value("chrome", "Chrome");
+        o.value("firefox", "Firefox");
+        o.value("safari", "Safari");
+        o.value("ios", "iOS");
+        o.value("android", "Android");
+        o.value("edge", "Edge");
+        o.value("random", "Random");
+        o.value("randomized", "Randomize");
+        o.rmempty = true;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_shortid', _('Short ID'));
+        o.depends('stream_security', "reality");
+        o.validate = xjay.validateShortID;
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_publickey', _('Public Key'));
+        o.depends('stream_security', "reality");
+        o.rmempty = false;
+        o.modalonly = true;
+
+        o = ss.taboption('protocol', form.Value, 'reality_spiderx', _('Spider Path'));
+        o.depends('stream_security', "reality");
+        o.rmempty = true;
+        o.modalonly = true;
+
         // transport tab of the server configuration popup
 
         ss.tab('transport', _('Transport Settings'));
@@ -390,7 +444,7 @@ return view.extend({
         o.value("tcp", "TCP");
         o.value("kcp", "mKCP");
         o.value("ws", "WebSocket");
-        o.value("http", "HTTP/2");
+        o.value("h2", "HTTP/2");
         o.value("quic", "QUIC");
         o.value("ds", "Domain Socket");
         o.value("grpc", "gRPC");
@@ -498,37 +552,38 @@ return view.extend({
         o.rmempty = false;
         o.modalonly = true;
 
-        // transport tab - http settings
+        // transport tab - http/2 settings
 
         o = ss.taboption('transport', form.DynamicList, "http_host", _("HTTP Host"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.datatype= 'hostname';
-        o.rmempty = false;
+        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_path", _("HTTP Path"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.validate = xjay.validateDirectory;
-        o.rmempty = false;
+        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_readidletimeout", _("HTTP Timeout Before Health Check"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.datatype = "uinteger";
         o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_healthchecktimeout", _("HTTP Health Check Timeout"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.datatype = "uinteger";
         o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "http_method", _("HTTP Method"));
-        o.depends("stream_network", "http");
+        o.depends("stream_network", "h2");
         o.value("PUT", "PUT");
         o.value("GET", "GET");
         o.value("POST", "POST");
+        o.optional = true;
         o.rmempty = true;
         o.modalonly = true;
 
