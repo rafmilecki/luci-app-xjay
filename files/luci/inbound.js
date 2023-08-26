@@ -585,25 +585,25 @@ return view.extend({
         o = ss.taboption('transport', form.Value, "kcp_mtu", _("KCP Maximum Transmission Unit"))
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
-        o.default = 1350;
+        o.placeholder = 1350;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_tti", _("KCP Transmission Time Interval"));
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
-        o.default = 50;
+        o.placeholder = 50;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_uplinkcapacity", _("KCP Uplink Capacity"));
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
-        o.default = 5;
+        o.placeholder = 5;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_downlinkcapacity", _("KCP Downlink Capacity"))
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
-        o.default = 20;
+        o.placeholder = 20;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Flag, "kcp_congestion", _("KCP Congestion Control"));
@@ -615,13 +615,13 @@ return view.extend({
         o = ss.taboption('transport', form.Value, "kcp_readbuffersize", _("KCP Read Buffer Size"));
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
-        o.default = 2;
+        o.placeholder = 2;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_writebuffersize", _("KCP Write Buffer Size"));
         o.datatype = "uinteger";
         o.depends("stream_network", "kcp");
-        o.default = 2;
+        o.placeholder = 2;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "kcp_type", _("KCP Fake Header Type"));
