@@ -41,21 +41,6 @@ return view.extend({
         o = s.taboption('path', form.Value, 'xray_path', _('Xray Executable Path'), 'Please check if it is right file location for xray bin, or this will not work!');
         o.datatype = 'directory';
 
-        // as blow is the debug options
-        s.tab('debug', _('Debug'));
-
-        o = s.taboption('debug', form.TextValue, 'xray_conf', _('Xray Config JSON'), _('Check <code>/var/etc/xray/config.json</code> to see if any mistakes there.'));
-        o.monospace = true;
-        o.readonly = true;
-        // set the rows of the text field to be the number of lines of the config file
-        fs.lines('/var/etc/xjay/config.json').then(function(value){
-            o.rows = value.length;
-        });
-        // show the config file content
-        o.cfgvalue = function(section_id) {
-            return fs.trimmed('/var/etc/xjay/config.json');
-        };
-
         return m.render();
     }
 

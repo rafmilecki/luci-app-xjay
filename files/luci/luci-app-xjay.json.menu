@@ -59,10 +59,19 @@
 
     "admin/services/xjay/misc": {
         "title": "Misc.",
-        "order": 70,
+        "order": 60,
         "action": {
             "type": "view",
             "path": "xjay/misc"
+        }
+    },
+
+    "admin/services/xjay/config": {
+        "title": "Config",
+        "order": 70,
+        "action": {
+            "type": "view",
+            "path": "xjay/config"
         }
     }
 }

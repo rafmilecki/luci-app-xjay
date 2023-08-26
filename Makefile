@@ -1,8 +1,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-xjay
-PKG_VERSION:=1.2.2
-PKG_RELEASE:=4
+PKG_VERSION:=1.2.3
+PKG_RELEASE:=6
 
 PKG_LICENSE:=MPLv2
 PKG_LICENSE_FILES:=LICENSE
@@ -68,6 +68,7 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DATA) ./files/luci/dns.js $(1)/www/luci-static/resources/view/xjay/dns.js
 	$(INSTALL_DATA) ./files/luci/routing.js $(1)/www/luci-static/resources/view/xjay/routing.js
 	$(INSTALL_DATA) ./files/luci/misc.js $(1)/www/luci-static/resources/view/xjay/misc.js
+	$(INSTALL_DATA) ./files/luci/config.js $(1)/www/luci-static/resources/view/xjay/config.js
 	$(INSTALL_DIR) $(1)/www/luci-static/resources
 	$(INSTALL_DATA) ./files/luci/xjay.js $(1)/www/luci-static/resources/xjay.js
 	$(INSTALL_DIR) $(1)/usr/share/luci/menu.d

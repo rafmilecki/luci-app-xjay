@@ -3,8 +3,13 @@
         "description": "Grant access to xjay configurations",
         "read": {
             "uci": [ "xjay" ],
+            "cgi-io": [ "exec" ],
             "file": {
-                "/var/etc/xjay/config.json": [ "read" ]
+                "/var/etc/xjay/config.json": [ "read" ],
+                "/bin/cat /var/etc/xjay/config.json": [ "exec" ]
+            },
+            "ubus": {
+                "file": [ "stat" ]
             }
         },
         "write": {
