@@ -112,11 +112,9 @@ return view.extend({
         o = ss.option(form.MultiValue, "rule_network", _("Network Type"), _("Network type to be matched for this rule."));
         o.value("tcp", "TCP");
         o.value("udp", "UDP");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.option(form.DynamicList, "rule_user", _("User Email"), _("User email address to be matched for this rule."));
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.option(form.DynamicList, "rule_inboundtag", _("Inbound Tag"), _("Inbound tags to be matched for this rule."));
@@ -133,7 +131,6 @@ return view.extend({
         o.modalonly = true;
 
         o = ss.option(form.DynamicList, "rule_attrs", _("Attribute Script"), _('A script to detect the traffic attributes. If return yes, the match the rule. See <a href="https://xtls.github.io/config/dns.html#dnsobject">documentation</a> for details.'));
-        o.rmempty = true;
         o.modalonly = true;
 
         return m.render();

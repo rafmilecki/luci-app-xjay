@@ -68,7 +68,6 @@ return view.extend({
         o = ss.taboption('general', form.Value, 'listen', _('Listening Address'), _('Optional. Could be IP address or unix domain socket'));
         o.validate = xjay.validateIPUnixSocket;
         o.placeholder = '127.0.0.1';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('general', form.Value, 'port', _('Listening Port'), _('It shall be unique. This will be the primary identifier for firewall rules to forward inbound traffic.'));
@@ -125,7 +124,6 @@ return view.extend({
         o.depends("dokodemo_followredirect", "false");
         o.datatype = 'or(ip4addr, ip6addr, hostname)';
         o.placeholder = '8.8.8.8';
-        o.rmempty = true;
         o.modalonly = true;
         o.optional = true;
 
@@ -133,7 +131,6 @@ return view.extend({
         o.depends("dokodemo_followredirect", "false");
         o.datatype = 'port';
         o.placeholder = '53';
-        o.rmempty = true;
         o.modalonly = true;
         o.optional = true;
 
@@ -141,21 +138,18 @@ return view.extend({
         o.depends("protocol", "dokodemo-door");
         o.value("tcp", "TCP");
         o.value("udp", "UDP");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, 'dokodemo_timeout', _('Connection Timeout'), _('If no data has been trasmitted during the timeout, then the connection will be disconnected.'));
         o.depends("protocol", "dokodemo-door");
         o.datatype = 'uinteger';
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, 'dokodemo_level', _('Policy Level'), _('User level for configured policies. This is useful for serving many users, normally it is not needed. See <a href="https://xtls.github.io/config/policy.html#levelpolicyobject">here</a> for help.'));
         o.depends("protocol", "dokodemo-door");
         o.datatype = 'uinteger';
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - http config options
@@ -185,7 +179,6 @@ return view.extend({
         o.depends("protocol", "http");
         o.datatype = 'uinteger';
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - socks config options
@@ -214,14 +207,12 @@ return view.extend({
         o = ss.taboption('protocol', form.Value, 'socks_ip', _('Device Local IP Address'), _('If UDP is enabled, xray needs to know device local IP address. See <a href="https://xtls.github.io/config/inbounds/socks.html#inboundconfigurationobject">here</a> for help.'));
         o.depends("socks_udp", "true");
         o.datatype = 'or(ip4addr, ip6addr)';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, 'socks_level', _('Policy Level'), _('User level for configured policies. This is useful for serving many users, normally it is not needed. See <a href="https://xtls.github.io/config/policy.html#levelpolicyobject">here</a> for help.'));
         o.depends("protocol", "socks");
         o.datatype = 'uinteger';
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - shadowsocks config options
@@ -247,7 +238,6 @@ return view.extend({
         o.depends("protocol", "shadowsocks");
         o.value("tcp", "TCP");
         o.value("udp", "UDP");
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - trojan config options
@@ -311,7 +301,6 @@ return view.extend({
         o.depends("protocol", "vmess");
         o.validate = xjay.validateStingWhitespace;
         o.placeholder = 'another_inbound_tag';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - tls or xtls settings
@@ -337,27 +326,23 @@ return view.extend({
         o.depends('stream_security', "xtls");
         o.value("h2", "h2");
         o.value("http/1.1", "http/1.1");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, "tls_minversion", _("Minimum TLS Version"));
         o.depends('stream_security', "tls");
         o.depends('stream_security', "xtls");
         o.validate = xjay.validateStingWhitespace;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, "tls_maxversion", _("Maximum TLS Version"));
         o.depends('stream_security', "tls");
         o.depends('stream_security', "xtls");
         o.validate = xjay.validateStingWhitespace;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.DynamicList, 'tls_ciphersuites', _('Supported Cipher Suites'));
         o.depends('stream_security', "tls");
         o.depends('stream_security', "xtls");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, 'cert_ocspStapling', _('Cert Reload Duration'));
@@ -365,7 +350,6 @@ return view.extend({
         o.depends('stream_security', "xtls");
         o.datatype = 'uinteger';
         o.placeholder = '3600';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Flag, 'cert_onetimeloading', _('Cert One Time Loading'));
@@ -381,7 +365,6 @@ return view.extend({
         o.value("encipherment", "Verification and Encryption");
         o.value("verify", "Verification");
         o.value("issue", "Sign Other Certs");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, "cert_certificatefile", _("Cert File Path"));
@@ -422,7 +405,6 @@ return view.extend({
         o = ss.taboption('protocol', form.Value, 'reality_xver', _('Proxy Version'));
         o.depends('stream_security', "reality");
         o.datatype= 'uinteger';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.DynamicList, "reality_servername", _("Server Name List"), _('Available server name list for clients.'));
@@ -438,18 +420,15 @@ return view.extend({
 
         o = ss.taboption('protocol', form.Value, 'reality_minclientver', _('Minimum Client Version'));
         o.depends('stream_security', "reality");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, 'reality_maxclientver', _('Maximum Client Version'));
         o.depends('stream_security', "reality");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, 'reality_maxtimediff', _('Maximum Time Difference'), _('Allowed maxmium time different between client and server in mini sections.'));
         o.depends('stream_security', "reality");
         o.datatype= 'uinteger';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.DynamicList, "reality_shortid", _("Short ID List"), _('Available short ID list for clients.'));
@@ -490,7 +469,6 @@ return view.extend({
         o = ss.taboption('protocol', form.DynamicList, "sniffing_domainsexcluded", _("Excluded Domains"), _('If the traffic matches selected type but destination in this list, then the destination will not be override. Choose the one suites best for your usage. See <a href="https://xtls.github.io/config/inbound.html#sniffingobject">here</a> for help.'));
         o.depends({ "sniffing_enabled": "true" });
         o.datatype = 'hostname';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Flag, 'sniffing_routeonly', _('Route Only'), _('Use sniffed domain for routing only but still access through IP. Reduces unnecessary DNS requests. See <a href="https://xtls.github.io/config/inbound.html#sniffingobject">here</a> for help.'));
@@ -509,7 +487,6 @@ return view.extend({
         };
 
         o = ss.taboption('protocol', form.MultiValue, 'fallback', _('Fallbacks'), _('Select fallbacks fro this inbound service.'));
-        o.rmempty = true;
         for (var v of uci.sections(config_data, "fallback")) {
             o.value(v.tag);
         }
@@ -549,7 +526,6 @@ return view.extend({
         o = ss.taboption('transport', form.Value, 'sockopt_tcpkeepaliveinterval', _('TCP Keep Alive Interval'));
         o.datatype = 'uinteger';
         o.placeholder = '25';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, 'sockopt_tcpcongestion', _('TCP Congestion Algorithm'));
@@ -610,28 +586,24 @@ return view.extend({
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 1350;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_tti", _("KCP Transmission Time Interval"));
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 50;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_uplinkcapacity", _("KCP Uplink Capacity"));
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 5;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_downlinkcapacity", _("KCP Downlink Capacity"))
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 20;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Flag, "kcp_congestion", _("KCP Congestion Control"));
@@ -644,14 +616,12 @@ return view.extend({
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 2;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_writebuffersize", _("KCP Write Buffer Size"));
         o.datatype = "uinteger";
         o.depends("stream_network", "kcp");
         o.default = 2;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "kcp_type", _("KCP Fake Header Type"));
@@ -697,13 +667,11 @@ return view.extend({
         o = ss.taboption('transport', form.DynamicList, "http_host", _("HTTP Host"));
         o.depends("stream_network", "h2");
         o.datatype= 'hostname';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_path", _("HTTP Path"));
         o.depends("stream_network", "h2");
         o.validate = xjay.validateDirectory;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "http_method", _("HTTP Method"));
@@ -712,7 +680,6 @@ return view.extend({
         o.value("GET", "GET");
         o.value("POST", "POST");
         o.optional = true;
-        o.rmempty = true;
         o.modalonly = true;
 
         // transport tab - quic settings
@@ -823,18 +790,15 @@ return view.extend({
         o = ss.option(form.Value, "name", _("Server Name"), _("Trying to match TLS SNI."));
         o.validate = xjay.validateStingWhitespace;
         o.placeholder = 'example.com';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.option(form.Value, 'tls_alpn', _("TLS ALPN"), _('Try to match TLS ALPN negotiation result. Null means any alpn.'));
         o.value("h2", "h2");
         o.value("http/1.1", "http/1.1");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.option(form.Value, "path", _("HTTP Path"), _('Try to match first http package path.'));
         o.validate = xjay.validateDirectory;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.option(form.Value, "dest", _("Traffic Destination"), _('The traffic destination after TLS decryption. Could be port number or ipaddr:port or domain:port.'));

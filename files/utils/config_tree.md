@@ -273,6 +273,7 @@ inbound_protocol{}
 		|- grpc_healthchecktimeout: number: default 20 - outbound only
 		|- grpc_permitwithoutstream: bool - outbound only
 		|- grpc_initialwindownsize: number: default 0 - outbound only
+		|- grpc_useragent: string - outbound only
 	|- sockopt{}
 		|- sockopt_mark: number - outbound only
 		|- sockopt_tcpfastopen: bool

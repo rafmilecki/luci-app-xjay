@@ -155,6 +155,7 @@ local function grpc_settings(data, direction)
         local idletimeout = nil
         local healthchecktimeout = nil
         local initialwindowssize = nil
+        local useragent = nil
 
         if direction == "outbound" then
             multimode = data.grpc_multimode == "true" and true or false
@@ -162,6 +163,7 @@ local function grpc_settings(data, direction)
             healthchecktimeout = data.grpc_healthchecktimeout ~= nil and tonumber(data.grpc_healthchecktimeout) or nil
             permitwithoutstream = data.grpc_permitwithoutstream == "true" and true or false
             initialwindowssize = data.grpc_initialwindownsize ~= nil and tonumber(data.grpc_initialwindownsize) or nil
+            useragent = data.grpc_useragent
         end
 
         return {
@@ -170,7 +172,8 @@ local function grpc_settings(data, direction)
             idle_timeout = idletimeout,
             health_check_timeout = healthchecktimeout,
             permit_without_stream = permitwithoutstream,
-            initial_windows_size = initialwindowssize
+            initial_windows_size = initialwindowssize,
+            user_agent = useragent
         }
     else
         return nil

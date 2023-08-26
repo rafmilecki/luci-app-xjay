@@ -66,7 +66,6 @@ return view.extend({
         o = ss.taboption('general', form.Value, 'sendthrough', _('Data sending address'));
         o.datatype = 'host';
         o.placeholder = '0.0.0.0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab of the server configuration popup
@@ -146,13 +145,11 @@ return view.extend({
         o = ss.taboption('protocol', form.Value, "ss_email", _("User Email Address"));
         o.depends("protocol", "shadowsocks");
         o.placeholder = 'david@example.com';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, "ss_level", _("User Level"));
         o.depends("protocol", "shadowsocks");
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - socks config options
@@ -172,7 +169,6 @@ return view.extend({
         o = ss.taboption('protocol', form.Value, "socks_level", _("User Level"));
         o.depends("protocol", "socks");
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - trojan config options
@@ -187,13 +183,11 @@ return view.extend({
         o = ss.taboption('protocol', form.Value, "trojan_email", _("User Email Address"));
         o.depends("protocol", "trojan");
         o.placeholder = 'david@example.com';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, "trojan_level", _("User Level"));
         o.depends("protocol", "trojan");
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - vless config options
@@ -230,7 +224,6 @@ return view.extend({
         o = ss.taboption('protocol', form.Value, "vless_level", _("User Level"));
         o.depends("protocol", "vless");
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - vmess config options
@@ -265,7 +258,6 @@ return view.extend({
         o = ss.taboption('protocol', form.Value, "vmess_level", _("User Level"));
         o.depends("protocol", "vmess");
         o.placeholder = '0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - tls or xtls settings
@@ -298,7 +290,6 @@ return view.extend({
         o.depends('stream_security', "xtls");
         o.value("h2", "h2");
         o.value("http/1.1", "http/1.1");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Flag, 'tls_disablesystemroot', _('Disable System CA'));
@@ -327,13 +318,11 @@ return view.extend({
         o.value("edge", "Edge");
         o.value("random", "Random");
         o.value("randomized", "Randomize");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.DynamicList, 'tls_pinnedpeercertificatechainsha256', _('Remote Cert Chain SHA256'));
         o.depends('stream_security', "tls");
         o.depends('stream_security', "xtls");
-        o.rmempty = true;
         o.modalonly = true;
 
         // protocol tab - reality settings
@@ -369,7 +358,6 @@ return view.extend({
         o.value("edge", "Edge");
         o.value("random", "Random");
         o.value("randomized", "Randomize");
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('protocol', form.Value, 'reality_shortid', _('Short ID'));
@@ -385,7 +373,6 @@ return view.extend({
 
         o = ss.taboption('protocol', form.Value, 'reality_spiderx', _('Spider Path'));
         o.depends('stream_security', "reality");
-        o.rmempty = true;
         o.modalonly = true;
 
         // transport tab of the server configuration popup
@@ -400,12 +387,6 @@ return view.extend({
         o.cfgvalue = function(section_id) {
             return _('<strong>Configuration Options for Sockopt</strong>');
         };
-
-        //o = ss.taboption('transport', form.Value, 'sockopt_mark', _('Socket Mark'));
-        //o.datatype = 'uinteger';
-        //o.placeholder = '255';
-        //o.rmempty = true;
-        //o.modalonly = true;
 
         o = ss.taboption('transport', form.Flag, 'sockopt_tcpfastopen', _('TCP Fast Open'));
         o.enabled = 'true';
@@ -422,13 +403,11 @@ return view.extend({
         o = ss.taboption('transport', form.Value, 'sockopt_dialerproxy', _('Dialer Proxy'));
         o.validate = xjay.validateStingWhitespace;
         o.placeholder = 'another_outbound_tag';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, 'sockopt_interface', _('Outbound Interface'));
         o.validate = xjay.validateStingWhitespace;
         o.placeholder = 'eth0';
-        o.rmempty = true;
         o.modalonly = true;
 
         // transport tab - network types
@@ -476,28 +455,24 @@ return view.extend({
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 1350;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_tti", _("KCP Transmission Time Interval"));
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 50;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_uplinkcapacity", _("KCP Uplink Capacity"));
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 5;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_downlinkcapacity", _("KCP Downlink Capacity"))
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 20;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Flag, "kcp_congestion", _("KCP Congestion Control"));
@@ -510,14 +485,12 @@ return view.extend({
         o.depends("stream_network", "kcp");
         o.datatype = "uinteger";
         o.default = 2;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "kcp_writebuffersize", _("KCP Write Buffer Size"));
         o.datatype = "uinteger";
         o.depends("stream_network", "kcp");
         o.default = 2;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "kcp_type", _("KCP Fake Header Type"));
@@ -557,25 +530,21 @@ return view.extend({
         o = ss.taboption('transport', form.DynamicList, "http_host", _("HTTP Host"));
         o.depends("stream_network", "h2");
         o.datatype= 'hostname';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_path", _("HTTP Path"));
         o.depends("stream_network", "h2");
         o.validate = xjay.validateDirectory;
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_readidletimeout", _("HTTP Timeout Before Health Check"));
         o.depends("stream_network", "h2");
         o.datatype = "uinteger";
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "http_healthchecktimeout", _("HTTP Health Check Timeout"));
         o.depends("stream_network", "h2");
         o.datatype = "uinteger";
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "http_method", _("HTTP Method"));
@@ -584,7 +553,6 @@ return view.extend({
         o.value("GET", "GET");
         o.value("POST", "POST");
         o.optional = true;
-        o.rmempty = true;
         o.modalonly = true;
 
         // transport tab - quic settings
@@ -628,33 +596,41 @@ return view.extend({
         o.enabled = 'true';
         o.disabled = 'false';
         o.modalonly = true;
+        o.optional = true;
 
         o = ss.taboption('transport', form.Value, "grpc_idletimeout", _("gRPC Idle Timeout"));
-        o.depends({ "transport": "grpc", "grpc_health_check": "1" });
+        o.depends("stream_network", "grpc");
         o.datatype = 'integer';
-        o.default = 10;
-        o.rmempty = true;
+        o.placeholder = 10;
         o.modalonly = true;
+        o.optional = true;
 
         o = ss.taboption('transport', form.Value, "grpc_healthchecktimeout", _("gRPC Health Check Timeout"));
         o.depends("stream_network", "grpc");
         o.datatype = 'integer';
-        o.default = 20;
-        o.rmempty = true;
+        o.placeholder = 20;
         o.modalonly = true;
+        o.optional = true;
 
         o = ss.taboption('transport', form.Flag, "grpc_permitwithoutstream", _("gRPC Permit Without Stream"));
         o.depends("stream_network", "grpc");
         o.enabled = 'true';
         o.disabled = 'false';
         o.modalonly = true;
+        o.optional = true;
 
-        o = ss.taboption('transport', form.Value, "grpc_initialwindownsize", _("gRPC Initial Windows Size"), _("Set to 524288 to avoid Cloudflare sending ENHANCE_YOUR_CALM."));
+        o = ss.taboption('transport', form.Value, "grpc_initialwindownsize", _("gRPC Initial Windows Size"), _("If the value 0 then the function will be disabled. If the value is greater than 65535, then dynamic window will be disabled. Set to 524288 if you're using cloudflare CDN, this could avoid Cloudflare sending h2 GOAWAY to end the connection."));
         o.depends("stream_network", "grpc");
         o.datatype = 'integer';
-        o.default = 0;
-        o.rmempty = true;
+        o.placeholder = 0;
         o.modalonly = true;
+        o.optional = true;
+
+        o = ss.taboption('transport', form.Value, "grpc_useragent", _("gRPC User Agent"));
+        o.depends("stream_network", "grpc");
+        o.rmempty = false;
+        o.modalonly = true;
+        o.optional = true;
 
         // transport tab - mux settings
 
@@ -667,14 +643,12 @@ return view.extend({
         o.depends("mux_enabled", "true");
         o.datatype = 'integer';
         o.placeholder = '16';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.Value, "mux_xudpconcurrency", _("Maximum concurrent UDP connections"), _("Use XUDP tunel to proxy UDP traffic. The number means maximum UDP over TCP concurrent connections. Range from 1 to 1024. If set 0, keep it blank set as 0, will use the same TCP connection. If set -1, then it will not use mux to do UDP connection."));
         o.depends("mux_enabled", "true");
         o.datatype = 'integer';
         o.placeholder = '16';
-        o.rmempty = true;
         o.modalonly = true;
 
         o = ss.taboption('transport', form.ListValue, "mux_xudpproxyudp443", _("QUIC UDP proxy mode"), _("Control the behavior of handling QUIC(UDP/443) traffic."));
