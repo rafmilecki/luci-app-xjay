@@ -24,10 +24,10 @@ return view.extend({
 		var conf_lines = conf_data.trim().split(/\n/);
 
 		return E([], [
-			E('h2', {}, [ _('System Log') ]),
-			E('div', { 'id': 'content_syslog' }, [
+			E('h2', {}, [ _('Xray Config File') ]),
+			E('div', { 'id': 'content_config' }, [
 				E('textarea', {
-					'id': 'syslog',
+					'id': 'xray_config',
 					'style': 'font-size:14px',
 					'readonly': 'readonly',
 					'wrap': 'off',
