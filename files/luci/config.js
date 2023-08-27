@@ -29,7 +29,7 @@ return view.extend({
 				E('textarea', {
 					'id': 'xray_config',
 					'style': 'font-size:14px',
-					'style': 'width:800px',
+					'style': 'width:100%',
 					'readonly': 'readonly',
 					'wrap': 'off',
 					'rows': conf_lines.length + 1
