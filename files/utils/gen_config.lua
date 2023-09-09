@@ -586,7 +586,7 @@ end
 
 local function blackhole_outbound()
     return {
-        tag = "blackhole_outbound",
+        tag = "blackhole",
         protocol = "blackhole"
     }
 end
@@ -594,7 +594,7 @@ end
 local function dns_outbound()
     return {
         protocol = "dns",
-        tag = "dns_outbound",
+        tag = "dns",
         streamSettings = {
             sockopt = {
                 mark = outbound.sockopt_mark ~= nil and tonumber(outbound.sockopt_mark) or nil
@@ -603,7 +603,7 @@ local function dns_outbound()
     }
 end
 
-local function freedom_outbound()
+local function direct_outbound()
     return {
         protocol = "freedom",
         tag = "direct",
@@ -763,11 +763,7 @@ local function inbounds()
 end
 
 local function outbounds()
-    local outbounds = {
-        freedom_outbound(),
-        dns_outbound(),
-        blackhole_outbound()
-    }
+    local outbounds = {}
     local function is_outbound_created(tag)
         for i, v in ipairs(outbounds) do
             if tag == v.tag then
@@ -780,7 +776,7 @@ local function outbounds()
     -- generating outbounds based on ruouting outbound tags
     ucursor:foreach("xjay", "outbound_server", function(data)
         -- insert default oubound in the first
-        if data.tag == outbound.default_outbound then table.insert(result, 1, outbound_server(data)) end
+        if data.tag == outbound.default_outbound then table.insert(outbounds, 1, outbound_server(data)) end
 
         -- append other outbounds from routing rules in the last
         ucursor:foreach("xjay", "routing_rule", function(dd)
@@ -789,6 +785,21 @@ local function outbounds()
             end
         end)
     end)
+
+    -- generating some pre-defined outbounds
+    if outbound.default_outbound == "direct" then
+        table.insert(outbounds, 1, direct_outbound())
+    else
+        table.insert(outbounds, direct_outbound())
+    end
+
+    if outbound.default_outbound == "blackhole" then
+        table.insert(outbounds, 1, blackhole_outbound())
+    else
+        table.insert(outbounds, blackhole_outbound())
+    end
+
+    table.insert(outbounds, dns_outbound())
 
     return outbounds
 end

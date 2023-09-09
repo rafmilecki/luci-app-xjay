@@ -26,8 +26,8 @@ return view.extend({
         o = s.option(form.ListValue, "default_outbound", _("Default outbound"),  _("All the connections that do not match any routing rules will forwarded to this outbound server."));
         o.datatype = "string";
         o.optional = true;
-        o.value('direct');
-        o.value('blackhole_outbound');
+        o.value('direct', 'direct (pre-defined)');
+        o.value('blackhole', 'blackhole (pre-defined)');
         for (var v of uci.sections(config_data, "outbound_server")) {
             o.value(v.tag);
         }
