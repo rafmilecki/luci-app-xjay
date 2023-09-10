@@ -98,7 +98,6 @@ start_service() {
         local tag=$(config_get $cfg_id tag)
         if [ "$tag" = "$default_outbound" ]; then
             DEFAULT_OUTBOUND_CFG="$cfg_id"
-            logger -st xjay[$$] -p4 "Using default outbound: [$tag]..."
         fi
     }
     config_foreach find_default_outbound_cfg outbound_server
@@ -106,8 +105,7 @@ start_service() {
     [ "$default_outbound" != "direct" ] && \
     [ "$default_outbound" != "blackhole" ] && \
     logger -st xjay[$$] -p4 "Default outbound not found, exiting..." && return
-    [ "$default_outbound" == "direct" ] && logger -st xjay[$$] -p4 "Using default outbound: [direct]..."
-    [ "$default_outbound" == "blackhole" ] && logger -st xjay[$$] -p4 "Using default outbound: [blackhole]..."
+    logger -st xjay[$$] -p4 "Using default outbound: [$default_outbound]..."
 
 
     # check xray bin and start it
