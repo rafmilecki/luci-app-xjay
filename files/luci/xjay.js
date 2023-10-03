@@ -128,7 +128,7 @@ return baseclass.extend({
 		if (s == null || s == '')
 			return true;
 
-		if (/geosite:([a-z\d]([a-z\d-]*[a-z\d])*)+$/i.test(s)) { // for domain matches geodata such as geosite:google
+		if (/geosite:([a-z\d]([a-z\d-@]*[a-z\d])*)+$/i.test(s)) { // for domain matches geodata such as geosite:google
 			return true;
 		}else if (/(domain|full):([a-z\d]([a-z\d-]*[a-z\d])*)+(\.[a-z]{2,})+$/i.test(s)) { // for domain matching with domain:google.com or full:www.google.com
 			return true;
@@ -148,7 +148,7 @@ return baseclass.extend({
 		if (s == null || s == '')
 			return true;
 
-		if (/geoip:([a-z\d]([a-z\d-]*[a-z\d])*)+$/i.test(s)) { // for domain matches geodata such as geoip:cn
+		if (/geoip:([a-z\d]([a-z\d-@]*[a-z\d])*)+$/i.test(s)) { // for domain matches geodata such as geoip:cn
 			return true;
 		}else if (/^(\d+\.\d+\.\d+\.\d+)(?:\/(\d+\.\d+\.\d+\.\d+)|\/(\d{1,2}))?$/i.test(s)) { // for IP that matching IPv4 with or without mask
 			return true;
