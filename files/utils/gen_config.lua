@@ -848,6 +848,7 @@ local function dnss()
         end
 
         local server = {
+            queryStrategy = data.querystrategy,
             address = data.server_address ~= nil and data.server_address or nil,
             port = data.server_port ~= nil and tonumber(data.server_port) or nil,
             skipFallback = data.server_skipfallback == "true" and true or false,

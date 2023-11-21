@@ -17,7 +17,7 @@ return view.extend({
         o.value("UseIP");
         o.value("UseIPv4");
         o.value("UseIPv6");
-        o.rmempty = false;
+        o.optional = true;
 
         o = s.option(form.Flag, 'disablecache', _('DNS Cache'), _('Enable DNS cache may speed up dns resolving speed.'));
         o.enabled = 'false';
@@ -58,6 +58,12 @@ return view.extend({
         o = ss.option(form.Value, "tag", _("Tag"), _("Alias name for this dns server."));
         o.validate = xjay.validateStingWhitespace;
         o.rmempty = false;
+
+        o = ss.option(form.ListValue, 'querystrategy', _('DNS Query Strategy'), _("To query only IPv4 or IPv6 or both."));
+        o.value("UseIP");
+        o.value("UseIPv4");
+        o.value("UseIPv6");
+        o.optional = true;
 
         o = ss.option(form.Value, "server_address",_("Server IP Address"),  _("Valid server could be like 8.8.8.8 or 8.8.8.8:5353 or https://dns.google/dns-query or https+local://dns.google/dns-query or tcp://8.8.8.8:53 or tcp+local://8.8.8.8:53 or localhost."));
         o.validate = xjay.validateDNS;
