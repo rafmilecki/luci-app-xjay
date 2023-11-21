@@ -15,6 +15,7 @@
 	|- tag: string
 	|- hosts{}: key:value : domain:ipaddress
 	|- servers[]: server object array
+		|- querystrategy: string: UseIP | UseIPv4 | UseIPv6
 		|- server_address: string
 		|- server_port: number: 0-65535
 		|- server_domains[]: string array
